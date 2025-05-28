@@ -1,13 +1,29 @@
+.save-dialog {
+  position: relative;
+}
+
+.save-dialog .MuiDialog-container {
+  align-items: center;
+  justify-content: center;
+}
+
 .save-dialog .MuiPaper-root {
   background: linear-gradient(135deg, #fff 0%, #F8F8FF 100%);
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(147, 112, 219, 0.2);
+  margin: 32px;
+  width: 100%;
+  max-width: 500px !important;
 }
 
 .save-dialog .MuiDialogTitle-root {
   background: linear-gradient(45deg, #E6E6FA 0%, #DDA0DD 100%);
   color: #483D8B;
   padding: 16px 24px;
+}
+
+.save-dialog .MuiDialogContent-root {
+  padding: 24px;
 }
 
 .save-dialog .MuiOutlinedInput-root {
@@ -28,4 +44,22 @@
 
 .save-dialog .MuiSlider-thumb {
   background-color: #483D8B;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+  .save-dialog .MuiPaper-root {
+    margin: 16px;
+    margin-right: 5px;
+    width: calc(100% - 21px);
+    max-height: calc(100% - 32px);
+  }
+
+  .save-dialog .MuiDialogContent-root {
+    padding: 16px;
+  }
+
+  .save-dialog .MuiDialogActions-root {
+    padding: 8px 16px 16px;
+  }
 } 

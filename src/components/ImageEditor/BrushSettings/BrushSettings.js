@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
   Slider,
   Typography,
-  ClickAwayListener
+  ClickAwayListener,
+  useMediaQuery
 } from '@mui/material';
 import BrushIcon from '@mui/icons-material/Brush';
 import CreateIcon from '@mui/icons-material/Create';
@@ -32,6 +33,24 @@ const BrushSettings = ({
   onOpacityChange
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isSmallScreen = useMediaQuery('(max-width: 360px)');
+
+  // Обработка изменения размера окна
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, []);
 
   const brushTypes = [
     { type: 'pencil', label: 'Карандаш', icon: <CreateIcon /> },
@@ -43,6 +62,9 @@ const BrushSettings = ({
 
   const handleBrushTypeClick = (type) => {
     onBrushTypeChange(type);
+    if (isSmallScreen) {
+      setIsVisible(false); // Закрываем панель после выбора на маленьких экранах
+    }
   };
 
   const togglePanel = () => {
@@ -50,10 +72,13 @@ const BrushSettings = ({
   };
 
   const handleClickAway = () => {
-    if (window.innerWidth <= 768) {
+    if (isMobile) {
       setIsVisible(false);
     }
   };
+
+  // Вычисляем максимальную высоту панели
+  const maxPanelHeight = Math.min(500, windowHeight * 0.8);
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -62,7 +87,16 @@ const BrushSettings = ({
           <TuneIcon />
         </button>
 
-        <Box className={`brush-settings ${isVisible ? 'visible' : ''}`}>
+        <Box 
+          className={`brush-settings ${isVisible ? 'visible' : ''}`}
+          sx={{
+            ...(isMobile && {
+              maxHeight: `${maxPanelHeight}px`,
+              overflowY: 'auto',
+              overscrollBehavior: 'contain'
+            })
+          }}
+        >
           <div className="settings-group">
             <Typography variant="h6">Инструменты</Typography>
             <div className="brush-type-buttons">
@@ -108,7 +142,7 @@ const BrushSettings = ({
                     onChange={(e) => onBrushColorChange(e.target.value)}
                     style={{
                       width: '100%',
-                      height: '40px',
+                      height: isMobile ? '50px' : '40px',
                       border: 'none',
                       borderRadius: '8px',
                       cursor: 'pointer'
