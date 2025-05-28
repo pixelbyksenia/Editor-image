@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/editor-image/static/css/main.8ff77d0f.css",
-    "main.js": "/editor-image/static/js/main.611c3524.js",
-    "static/js/453.4ac7b349.chunk.js": "/editor-image/static/js/453.4ac7b349.chunk.js",
-    "index.html": "/editor-image/index.html",
-    "main.8ff77d0f.css.map": "/editor-image/static/css/main.8ff77d0f.css.map",
-    "main.611c3524.js.map": "/editor-image/static/js/main.611c3524.js.map",
-    "453.4ac7b349.chunk.js.map": "/editor-image/static/js/453.4ac7b349.chunk.js.map"
+    "main.css": "https://pixelbyksenia.github.io/Editor-image/static/css/main.8ff77d0f.css",
+    "main.js": "https://pixelbyksenia.github.io/Editor-image/static/js/main.5c83c2ce.js",
+    "static/js/453.4ac7b349.chunk.js": "https://pixelbyksenia.github.io/Editor-image/static/js/453.4ac7b349.chunk.js",
+    "index.html": "https://pixelbyksenia.github.io/Editor-image/index.html",
+    "main.8ff77d0f.css.map": "https://pixelbyksenia.github.io/Editor-image/static/css/main.8ff77d0f.css.map",
+    "main.5c83c2ce.js.map": "https://pixelbyksenia.github.io/Editor-image/static/js/main.5c83c2ce.js.map",
+    "453.4ac7b349.chunk.js.map": "https://pixelbyksenia.github.io/Editor-image/static/js/453.4ac7b349.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8ff77d0f.css",
-    "static/js/main.611c3524.js"
+    "static/js/main.5c83c2ce.js"
   ]
 }
