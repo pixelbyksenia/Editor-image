@@ -1,0 +1,91 @@
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(230, 230, 250, 0.9) 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.15);
+  margin-bottom: 16px;
+}
+
+.logo-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.logo-icon .MuiSvgIcon-root {
+  color: #483D8B;
+  font-size: 24px;
+  z-index: 1;
+  animation: rotateIcon 10s linear infinite;
+}
+
+.logo-circle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: rotate(-90deg);
+}
+
+.logo-circle circle {
+  fill: none;
+  stroke: #9370DB;
+  stroke-width: 2;
+  stroke-dasharray: 63;
+  stroke-dashoffset: 63;
+  animation: drawCircle 2s ease-out forwards;
+}
+
+.logo-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600 !important;
+  color: #483D8B !important;
+  letter-spacing: 0.5px !important;
+  position: relative;
+  padding-right: 8px;
+}
+
+.logo-dot {
+  color: #9370DB;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes rotateIcon {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes drawCircle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .logo-container {
+    padding: 6px 12px;
+  }
+
+  .logo-text {
+    font-size: 1.2rem !important;
+  }
+} 

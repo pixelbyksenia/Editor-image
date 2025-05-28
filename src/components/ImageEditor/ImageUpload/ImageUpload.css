@@ -1,0 +1,31 @@
+.image-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.image-upload.drag-over {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.drag-drop-text {
+  color: #666;
+  margin-left: 4px;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.image-upload:hover .drag-drop-text {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .drag-drop-text {
+    display: none;
+  }
+} 

@@ -1,0 +1,138 @@
+.editor-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #E6E6FA 0%, #D8BFD8 50%, #9370DB 100%);
+}
+
+.editor-layout {
+  display: flex;
+  gap: 20px;
+  max-width: 100%;
+  height: calc(100vh - 40px);
+}
+
+.editor-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.canvas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(147, 112, 219, 0.15);
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: linear-gradient(45deg, #E6E6FA 0%, #DDA0DD 100%);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.1);
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-group:not(:last-child) {
+  margin-right: 24px;
+}
+
+.toolbar-divider {
+  height: 24px;
+  width: 1px;
+  background-color: rgba(147, 112, 219, 0.2);
+  margin: 0 12px;
+}
+
+.history-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brush-controls {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.save-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Анимации для кнопок */
+.editor-toolbar button {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.editor-toolbar button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background-color: rgba(147, 112, 219, 0.1);
+}
+
+.editor-toolbar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Стили для подсказок */
+.tooltip {
+  position: absolute;
+  background: rgba(72, 61, 139, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .editor-container {
+    padding: 10px;
+  }
+
+  .editor-layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .editor-main {
+    width: 100%;
+  }
+
+  .canvas-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .editor-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .toolbar-group {
+    flex-wrap: wrap;
+  }
+
+  .toolbar-divider {
+    display: none;
+  }
+} 

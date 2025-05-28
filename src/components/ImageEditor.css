@@ -1,0 +1,74 @@
+.editor-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #E6E6FA 0%, #D8BFD8 50%, #9370DB 100%);
+}
+
+.canvas-container {
+  position: relative;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(147, 112, 219, 0.15);
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: linear-gradient(45deg, #E6E6FA 0%, #DDA0DD 100%);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.1);
+}
+
+.toolbar button {
+  color: #483D8B;
+}
+
+.toolbar button:hover {
+  background-color: rgba(147, 112, 219, 0.1);
+}
+
+.drawing-canvas {
+  border: 2px solid #D8BFD8;
+  border-radius: 10px;
+  cursor: crosshair;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.1);
+}
+
+.save-dialog .MuiPaper-root {
+  background: linear-gradient(135deg, #fff 0%, #F8F8FF 100%);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(147, 112, 219, 0.2);
+}
+
+.save-dialog .MuiDialogTitle-root {
+  background: linear-gradient(45deg, #E6E6FA 0%, #DDA0DD 100%);
+  color: #483D8B;
+  padding: 16px 24px;
+}
+
+.save-dialog .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.save-dialog .MuiOutlinedInput-notchedOutline {
+  border-color: #D8BFD8;
+}
+
+.save-dialog .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #9370DB;
+}
+
+.save-dialog .MuiSlider-root {
+  color: #9370DB;
+}
+
+.save-dialog .MuiSlider-thumb {
+  background-color: #483D8B;
+} 
