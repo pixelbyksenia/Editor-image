@@ -27,6 +27,25 @@ const Canvas = ({ onDraw, onHistoryUpdate, brushSize, brushColor, brushType, opa
     saveState();
   }, []);
 
+  // Получаем координаты относительно canvas
+  const getCoordinates = (event) => {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    
+    if (event.type.includes('touch')) {
+      const touch = event.touches[0];
+      return {
+        x: (touch.clientX - rect.left) * (canvas.width / rect.width),
+        y: (touch.clientY - rect.top) * (canvas.height / rect.height)
+      };
+    }
+    
+    return {
+      x: (event.clientX - rect.left) * (canvas.width / rect.width),
+      y: (event.clientY - rect.top) * (canvas.height / rect.height)
+    };
+  };
+
   // Обновляем настройки кисти
   useEffect(() => {
     if (!contextRef.current) return;
@@ -81,93 +100,46 @@ const Canvas = ({ onDraw, onHistoryUpdate, brushSize, brushColor, brushType, opa
     return `rgba(${r},${g},${b},${alpha})`;
   };
 
+  const startDrawing = (event) => {
+    event.preventDefault();
+    const coords = getCoordinates(event);
+    setIsDrawing(true);
+    setLastX(coords.x);
+    setLastY(coords.y);
+  };
+
+  const draw = (event) => {
+    event.preventDefault();
+    if (!isDrawing) return;
+
+    const coords = getCoordinates(event);
+    const ctx = contextRef.current;
+    
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(coords.x, coords.y);
+    ctx.stroke();
+
+    setLastX(coords.x);
+    setLastY(coords.y);
+
+    if (onDraw) onDraw(canvasRef.current);
+  };
+
+  const stopDrawing = (event) => {
+    event.preventDefault();
+    if (isDrawing) {
+      setIsDrawing(false);
+      saveState();
+    }
+  };
+
   const saveState = useCallback(() => {
     const canvas = canvasRef.current;
     if (canvas && onHistoryUpdate) {
       onHistoryUpdate(canvas.toDataURL());
     }
   }, [onHistoryUpdate]);
-
-  const getCoordinates = (e) => {
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    
-    return {
-      x: (e.clientX - rect.left) * scaleX,
-      y: (e.clientY - rect.top) * scaleY
-    };
-  };
-
-  const startDrawing = (e) => {
-    e.preventDefault();
-    const coords = getCoordinates(e);
-    
-    const ctx = contextRef.current;
-    ctx.beginPath();
-    ctx.moveTo(coords.x, coords.y);
-    
-    if (brushType === 'airbrush') {
-      spray(coords.x, coords.y);
-    }
-    
-    setIsDrawing(true);
-    setLastX(coords.x);
-    setLastY(coords.y);
-  };
-
-  const spray = (x, y) => {
-    const ctx = contextRef.current;
-    const density = brushSize * 2;
-    
-    for (let i = 0; i < density; i++) {
-      const offsetX = getRandomOffset(brushSize);
-      const offsetY = getRandomOffset(brushSize);
-      ctx.fillStyle = ctx.strokeStyle;
-      ctx.fillRect(x + offsetX, y + offsetY, 1, 1);
-    }
-  };
-
-  const getRandomOffset = (radius) => {
-    const r = radius * Math.sqrt(Math.random());
-    const theta = Math.random() * 2 * Math.PI;
-    return r * Math.cos(theta);
-  };
-
-  const draw = (e) => {
-    if (!isDrawing) return;
-    e.preventDefault();
-    
-    const coords = getCoordinates(e);
-    const ctx = contextRef.current;
-    
-    if (brushType === 'airbrush') {
-      spray(coords.x, coords.y);
-    } else {
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(coords.x, coords.y);
-      ctx.stroke();
-    }
-    
-    setLastX(coords.x);
-    setLastY(coords.y);
-    
-    if (onDraw) onDraw(canvasRef.current);
-  };
-
-  const stopDrawing = () => {
-    if (isDrawing) {
-      contextRef.current.closePath();
-      // Сбрасываем globalAlpha для marker
-      if (brushType === 'marker') {
-        contextRef.current.globalAlpha = 1;
-      }
-      setIsDrawing(false);
-      saveState();
-    }
-  };
 
   const loadState = (state) => {
     const img = new Image();
@@ -238,7 +210,12 @@ const Canvas = ({ onDraw, onHistoryUpdate, brushSize, brushColor, brushType, opa
       onMouseUp={stopDrawing}
       onMouseOut={stopDrawing}
       onMouseLeave={stopDrawing}
+      onTouchStart={startDrawing}
+      onTouchMove={draw}
+      onTouchEnd={stopDrawing}
+      onTouchCancel={stopDrawing}
       className="drawing-canvas"
+      style={{ touchAction: 'none' }}
     />
   );
 };

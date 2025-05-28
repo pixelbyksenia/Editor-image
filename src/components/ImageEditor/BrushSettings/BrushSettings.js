@@ -1,22 +1,18 @@
-import React from 'react';
-import { 
-  Box, 
-  Slider, 
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Slider,
   Typography,
-  IconButton,
-  Popover,
-  Paper,
-  ToggleButton,
-  ToggleButtonGroup,
-  Tooltip
+  ClickAwayListener
 } from '@mui/material';
 import BrushIcon from '@mui/icons-material/Brush';
+import CreateIcon from '@mui/icons-material/Create';
+import GestureIcon from '@mui/icons-material/Gesture';
+import OpacityIcon from '@mui/icons-material/Opacity';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import FormatPaintIcon from '@mui/icons-material/FormatPaint';
-import CreateIcon from '@mui/icons-material/Create';
-import AutoFixNormalIcon from '@mui/icons-material/AutoFixNormal';
-import LayersClearIcon from '@mui/icons-material/LayersClear';
-import OpacityIcon from '@mui/icons-material/Opacity';
+import TuneIcon from '@mui/icons-material/Tune';
 import './BrushSettings.css';
 
 const PRESET_COLORS = [
@@ -25,159 +21,123 @@ const PRESET_COLORS = [
   '#FFFF00', '#00FFFF', '#FF00FF', '#FFFFFF', // Дополнительные цвета
 ];
 
-const BRUSH_TYPES = [
-  { id: 'pencil', icon: <CreateIcon />, label: 'Карандаш' },
-  { id: 'brush', icon: <BrushIcon />, label: 'Кисть' },
-  { id: 'marker', icon: <FormatPaintIcon />, label: 'Маркер' },
-  { id: 'airbrush', icon: <AutoFixNormalIcon />, label: 'Аэрограф' },
-  { id: 'eraser', icon: <LayersClearIcon />, label: 'Ластик' },
-];
-
-const BrushSettings = ({ 
-  brushSize, 
-  brushColor, 
+const BrushSettings = ({
+  brushSize,
+  brushColor,
   brushType,
   opacity,
-  onBrushSizeChange, 
+  onBrushSizeChange,
   onBrushColorChange,
   onBrushTypeChange,
   onOpacityChange
 }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const isEraser = brushType === 'eraser';
+  const [isVisible, setIsVisible] = useState(false);
 
-  const handleColorClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const brushTypes = [
+    { type: 'pencil', label: 'Карандаш', icon: <CreateIcon /> },
+    { type: 'brush', label: 'Кисть', icon: <BrushIcon /> },
+    { type: 'marker', label: 'Маркер', icon: <GestureIcon /> },
+    { type: 'airbrush', label: 'Спрей', icon: <OpacityIcon /> },
+    { type: 'eraser', label: 'Ластик', icon: <FormatPaintIcon /> }
+  ];
+
+  const handleBrushTypeClick = (type) => {
+    onBrushTypeChange(type);
   };
 
-  const handleColorClose = () => {
-    setAnchorEl(null);
+  const togglePanel = () => {
+    setIsVisible(!isVisible);
   };
 
-  const handleColorSelect = (color) => {
-    onBrushColorChange(color);
-    handleColorClose();
-  };
-
-  const handleBrushTypeChange = (_, newType) => {
-    if (newType !== null) {
-      onBrushTypeChange(newType);
+  const handleClickAway = () => {
+    if (window.innerWidth <= 768) {
+      setIsVisible(false);
     }
   };
 
   return (
-    <Box className="brush-settings">
-      <Box className="brush-types">
-        <Typography variant="subtitle2" sx={{ mb: 1, color: '#483D8B' }}>
-          Инструменты
-        </Typography>
-        <ToggleButtonGroup
-          value={brushType}
-          exclusive
-          onChange={handleBrushTypeChange}
-          orientation="vertical"
-          className="brush-type-group"
-        >
-          {BRUSH_TYPES.map((type) => (
-            <ToggleButton 
-              key={type.id} 
-              value={type.id}
-              className="brush-type-button"
-            >
-              {type.icon}
-              <Typography variant="body2">
-                {type.label}
-              </Typography>
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
-      </Box>
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Box>
+        <button className="mobile-toggle" onClick={togglePanel}>
+          <TuneIcon />
+        </button>
 
-      <Box className="brush-size-control">
-        <Box className="control-header">
-          <BrushIcon />
-          <Typography>
-            {isEraser ? "Размер ластика" : "Размер кисти"}
-          </Typography>
-        </Box>
-        <Slider
-          value={brushSize}
-          onChange={(_, value) => onBrushSizeChange(value)}
-          min={1}
-          max={50}
-          step={1}
-          valueLabelDisplay="auto"
-          sx={{
-            color: isEraser ? '#666' : brushColor
-          }}
-        />
-        <Typography variant="caption" sx={{ alignSelf: 'flex-end' }}>
-          {brushSize}px
-        </Typography>
-      </Box>
+        <Box className={`brush-settings ${isVisible ? 'visible' : ''}`}>
+          <div className="settings-group">
+            <Typography variant="h6">Инструменты</Typography>
+            <div className="brush-type-buttons">
+              {brushTypes.map(({ type, label, icon }) => (
+                <Button
+                  key={type}
+                  className={`brush-type-button ${brushType === type ? 'active' : ''}`}
+                  onClick={() => handleBrushTypeClick(type)}
+                  startIcon={icon}
+                >
+                  {label}
+                </Button>
+              ))}
+            </div>
+          </div>
 
-      {!isEraser && (
-        <>
-          <Box className="opacity-control">
-            <Box className="control-header">
-              <OpacityIcon />
-              <Typography>
-                Непрозрачность
-              </Typography>
-            </Box>
+          <div className="settings-group">
+            <Typography variant="h6">Размер</Typography>
             <Slider
-              value={opacity}
-              onChange={(_, value) => onOpacityChange(value)}
-              min={0}
-              max={100}
-              step={1}
+              value={brushSize}
+              onChange={(_, value) => onBrushSizeChange(value)}
+              min={1}
+              max={50}
               valueLabelDisplay="auto"
-              valueLabelFormat={(value) => `${value}%`}
               sx={{
-                color: brushColor
+                color: '#9370DB',
+                '& .MuiSlider-thumb': {
+                  backgroundColor: '#483D8B',
+                }
               }}
             />
-            <Typography variant="caption" sx={{ alignSelf: 'flex-end' }}>
-              {opacity}%
-            </Typography>
-          </Box>
+          </div>
 
-          <Box className="color-picker">
-            <Box className="control-header">
-              <ColorLensIcon />
-              <Typography>
-                Цвет
-              </Typography>
-            </Box>
-            <Paper className="color-palette">
-              <Box className="color-grid">
-                {PRESET_COLORS.map((color) => (
-                  <Tooltip key={color} title={color} placement="top">
-                    <Box
-                      className="color-option"
-                      sx={{
-                        backgroundColor: color,
-                        opacity: opacity / 100,
-                        border: color === brushColor ? '2px solid #483D8B' : '2px solid transparent'
-                      }}
-                      onClick={() => handleColorSelect(color)}
-                    />
-                  </Tooltip>
-                ))}
-              </Box>
-              <Box className="custom-color">
-                <input
-                  type="color"
-                  value={brushColor}
-                  onChange={(e) => handleColorSelect(e.target.value)}
-                  title="Выбрать произвольный цвет"
+          {brushType !== 'eraser' && (
+            <>
+              <div className="settings-group">
+                <Typography variant="h6">Цвет</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <ColorLensIcon sx={{ color: brushColor }} />
+                  <input
+                    type="color"
+                    value={brushColor}
+                    onChange={(e) => onBrushColorChange(e.target.value)}
+                    style={{
+                      width: '100%',
+                      height: '40px',
+                      border: 'none',
+                      borderRadius: '8px',
+                      cursor: 'pointer'
+                    }}
+                  />
+                </Box>
+              </div>
+
+              <div className="settings-group">
+                <Typography variant="h6">Прозрачность</Typography>
+                <Slider
+                  value={opacity}
+                  onChange={(_, value) => onOpacityChange(value)}
+                  min={1}
+                  max={100}
+                  valueLabelDisplay="auto"
+                  sx={{
+                    color: '#9370DB',
+                    '& .MuiSlider-thumb': {
+                      backgroundColor: '#483D8B',
+                    }
+                  }}
                 />
-              </Box>
-            </Paper>
-          </Box>
-        </>
-      )}
-    </Box>
+              </div>
+            </>
+          )}
+        </Box>
+      </Box>
+    </ClickAwayListener>
   );
 };
 

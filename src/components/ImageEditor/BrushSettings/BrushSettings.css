@@ -1,154 +1,107 @@
 .brush-settings {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(230, 230, 250, 0.9) 100%);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(147, 112, 219, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  box-shadow: -2px 0 12px rgba(147, 112, 219, 0.15);
-  height: 100%;
-  width: 250px;
+  gap: 20px;
+  width: 280px;
+  height: fit-content;
 }
 
-.brush-types {
-  display: flex;
-  flex-direction: column;
+.brush-settings h6 {
+  color: #483D8B;
+  margin: 0;
+  font-weight: 600;
+}
+
+.brush-type-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
-}
-
-.brush-type-group {
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  padding: 8px;
-  box-shadow: 0 2px 8px rgba(147, 112, 219, 0.1);
 }
 
 .brush-type-button {
+  padding: 8px 16px !important;
   border-radius: 8px !important;
-  margin: 2px !important;
-  padding: 8px !important;
-  border: none !important;
-  color: #483D8B !important;
-  justify-content: flex-start !important;
   text-transform: none !important;
+  font-size: 0.9rem !important;
+  width: 100%;
 }
 
-.brush-type-button .MuiSvgIcon-root {
-  margin-right: 8px;
+.brush-type-button.active {
+  background: linear-gradient(45deg, #E6E6FA 0%, #DDA0DD 100%) !important;
+  color: #483D8B !important;
+  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.2) !important;
 }
 
-.brush-type-button.Mui-selected {
-  background-color: rgba(147, 112, 219, 0.2) !important;
+.color-preview {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.brush-type-button:hover {
-  background-color: rgba(147, 112, 219, 0.1) !important;
-}
-
-.brush-size-control,
-.opacity-control {
+.settings-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(147, 112, 219, 0.1);
+  gap: 12px;
 }
 
-.control-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: linear-gradient(45deg, #E6E6FA 0%, #DDA0DD 100%);
   color: #483D8B;
-}
-
-.control-header .MuiTypography-root {
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.color-picker {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.color-palette {
-  padding: 16px;
-  background: linear-gradient(135deg, #fff 0%, #F8F8FF 100%);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(147, 112, 219, 0.2);
-}
-
-.color-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.color-option {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.3);
+  border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
-.color-option:hover {
+.mobile-toggle:hover {
   transform: scale(1.1);
 }
 
-.custom-color {
-  display: flex;
-  justify-content: center;
-  padding-top: 8px;
-  border-top: 1px solid rgba(147, 112, 219, 0.2);
-}
-
-.custom-color input[type="color"] {
-  width: 100%;
-  height: 32px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: none;
-}
-
-.custom-color input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-.custom-color input[type="color"]::-webkit-color-swatch {
-  border: 2px solid #D8BFD8;
-  border-radius: 8px;
-}
-
-/* Анимации */
-.brush-settings button {
-  transition: all 0.2s ease;
-}
-
-.brush-settings button:hover {
-  transform: translateY(-1px);
-}
-
-/* Адаптивность */
 @media (max-width: 768px) {
   .brush-settings {
     position: fixed;
+    bottom: 0;
+    left: 0;
     right: 0;
-    top: 0;
-    height: 100vh;
-    transform: translateX(100%);
+    width: 100%;
+    max-height: 60vh;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
     transition: transform 0.3s ease;
-    z-index: 1000;
+    z-index: 999;
+    overflow-y: auto;
+    padding-bottom: env(safe-area-inset-bottom, 20px);
   }
 
-  .brush-settings.open {
-    transform: translateX(0);
+  .brush-settings.visible {
+    transform: translateY(0);
+  }
+
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .brush-type-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .settings-group {
+    padding-right: 16px;
   }
 } 
