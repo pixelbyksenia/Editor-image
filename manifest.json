@@ -1,0 +1,25 @@
+{
+  "short_name": "Editor",
+  "name": "Editor - Редактор изображений",
+  "icons": [
+    {
+      "src": "art-and-design.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "art-and-design.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "art-and-design.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#9370DB",
+  "background_color": "#E6E6FA"
+}
