@@ -5,7 +5,7 @@
     {
       "src": "art-and-design.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
       "src": "art-and-design.png",
@@ -19,6 +19,7 @@
     }
   ],
   "start_url": ".",
+  "scope": "/editor-image/",
   "display": "standalone",
   "theme_color": "#9370DB",
   "background_color": "#E6E6FA"

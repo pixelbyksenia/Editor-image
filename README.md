@@ -36,7 +36,7 @@
 
 1. **Installation**
    ```bash
-   git clone https://github.com/pixelbyksenia/editor-image.git
+   git clone https://github.com/pixelbyksenia/Editor-image.git
    cd editor-image
    npm install
    ```
@@ -56,7 +56,7 @@
    ```bash
    npm run deploy
    ```
-   After deployment, your app will be available at [https://pixelbyksenia.github.io/editor-image](https://pixelbyksenia.github.io/editor-image)
+   After deployment, your app will be available at [https://pixelbyksenia.github.io/Editor-image](https://pixelbyksenia.github.io/Editor-image)
 
 ## 💻 Technology Stack
 
