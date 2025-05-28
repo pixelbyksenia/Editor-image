@@ -32,7 +32,31 @@
   - Responsive layout for all devices
   - Smooth animations and transitions
 
+## 🚀 Quick Start
 
+1. **Installation**
+   ```bash
+   git clone https://github.com/pixelbyksenia/editor-image.git
+   cd editor-image
+   npm install
+   ```
+
+2. **Development Mode**
+   ```bash
+   npm start
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+3. **Production Build**
+   ```bash
+   npm run build
+   ```
+
+4. **Deploy to GitHub Pages**
+   ```bash
+   npm run deploy
+   ```
+   After deployment, your app will be available at [https://pixelbyksenia.github.io/editor-image](https://pixelbyksenia.github.io/editor-image)
 
 ## 💻 Technology Stack
 
