@@ -32,25 +32,7 @@
   - Responsive layout for all devices
   - Smooth animations and transitions
 
-## 🚀 Quick Start
 
-1. **Installation**
-   ```bash
-   git clone https://github.com/your-username/editor-image.git
-   cd editor-image
-   npm install
-   ```
-
-2. **Development Mode**
-   ```bash
-   npm start
-   ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-3. **Production Build**
-   ```bash
-   npm run build
-   ```
 
 ## 💻 Technology Stack
 
@@ -87,7 +69,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 👥 Authors
 
-- [Your Name](https://github.com/your-username)
+- [Oksana Baranivska](https://github.com/pixelbyksenia)
 
 ## 🙏 Acknowledgments
 
